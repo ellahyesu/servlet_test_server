@@ -14,25 +14,21 @@
 </head>
 <body>
 	<%
-		String menu = request.getParameter("menu");
-		String[] option = request.getParameterValues("except");
-	%>
-	<%
-		List<Map<String, Object>> list = new ArrayList<>();
-		Map<String, Object> map = new HashMap<String, Object>() {{ put("name", "버거킹"); put("menu", "햄버거"); put("point", 4.3); } };
-		list.add(map);
-		map = new HashMap<String, Object>() {{ put("name", "BBQ"); put("menu", "치킨"); put("point", 3.8); } };
-		list.add(map);
-		map = new HashMap<String, Object>() {{ put("name", "교촌치킨"); put("menu", "치킨"); put("point", 4.1); } };
-		list.add(map);
-		map = new HashMap<String, Object>() {{ put("name", "도미노피자"); put("menu", "피자"); put("point", 4.5); } };
-		list.add(map);
-		map = new HashMap<String, Object>() {{ put("name", "맥도날드"); put("menu", "햄버거"); put("point", 3.8); } };
-		list.add(map);
-		map = new HashMap<String, Object>() {{ put("name", "BHC"); put("menu", "치킨"); put("point", 4.2); } };
-		list.add(map);
-		map = new HashMap<String, Object>() {{ put("name", "반올림피자"); put("menu", "피자"); put("point", 4.3); } };
-		list.add(map);
+	List<Map<String, Object>> list = new ArrayList<>();
+	Map<String, Object> map = new HashMap<String, Object>() {{ put("name", "버거킹"); put("menu", "햄버거"); put("point", 4.3); } };
+	list.add(map);
+	map = new HashMap<String, Object>() {{ put("name", "BBQ"); put("menu", "치킨"); put("point", 3.8); } };
+	list.add(map);
+	map = new HashMap<String, Object>() {{ put("name", "교촌치킨"); put("menu", "치킨"); put("point", 4.1); } };
+	list.add(map);
+	map = new HashMap<String, Object>() {{ put("name", "도미노피자"); put("menu", "피자"); put("point", 4.5); } };
+	list.add(map);
+	map = new HashMap<String, Object>() {{ put("name", "맥도날드"); put("menu", "햄버거"); put("point", 3.8); } };
+	list.add(map);
+	map = new HashMap<String, Object>() {{ put("name", "BHC"); put("menu", "치킨"); put("point", 4.2); } };
+	list.add(map);
+	map = new HashMap<String, Object>() {{ put("name", "반올림피자"); put("menu", "피자"); put("point", 4.3); } };
+	list.add(map);
 	%>
 	<div class="container">
 		<h1 class="text-center">검색 결과</h1>
@@ -46,49 +42,25 @@
 			</thead>
 			<tbody>
 			<%
-			if (option != null) { // 4점 이하는 제외일때
-				
+			String menu = request.getParameter("menu"); 
+			String option = request.getParameter("except"); // 체크함: "true", 체크 안함: null
+			
 				for (Map<String, Object> eachMap : list) { // 리스트 안의 각 map 호출
-					Iterator<String> iter = eachMap.keySet().iterator();
-					while (iter.hasNext()) {
-						String key = iter.next();
-						if (key.equals("menu") && eachMap.get("menu").equals(menu)) {
-
-							if ((double)eachMap.get("point") >= 4.0) {
-								
-								%>
-								<tr>
-								<td><%= eachMap.get("menu") %></td>
-								<td><%= eachMap.get("name") %></td>
-								<td><%= eachMap.get("point") %></td>
-							</tr>
-							<%	
-							}
-						}  
-					}
+					if (eachMap.get("menu").equals(menu)) {
+						if (option != null && (double)eachMap.get("point") < 4.0) { 
+							// 체크가 됐고, 4점 이하는 제외인 경우 skip!
+							continue;
+						}
+						%>
+						<tr>
+							<td><%= eachMap.get("menu") %></td>
+							<td><%= eachMap.get("name") %></td>
+							<td><%= eachMap.get("point") %></td>
+						</tr>
+				<%
+					}  
 				}
-			} else {
-				
-				for (Map<String, Object> eachMap : list) { 
-					Iterator<String> iter = eachMap.keySet().iterator();
-					while (iter.hasNext()) {
-						String key = iter.next();
-						if (key.equals("menu") && eachMap.get("menu").equals(menu)) {
-
-							if ((double)eachMap.get("point") <= 4.0) {
-								%>
-								<tr>
-								<td><%= eachMap.get("menu") %></td>
-								<td><%= eachMap.get("name") %></td>
-								<td><%= eachMap.get("point") %></td>
-							</tr>
-							<%	
-							}
-						}  
-					}
-				}
-			}
-			%>
+				%>
 			</tbody>
 		</table>
 	</div>
