@@ -10,6 +10,7 @@
     artistInfo.put("agency", "EDAM엔터테인먼트");
     artistInfo.put("photo", "https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg");
 
+
 // 아이유 노래 리스트 
     List<Map<String, Object>> musicList = new ArrayList<>();
 
@@ -78,24 +79,24 @@
     musicInfo.put("composer", "아이유,이종훈,이채규");
     musicInfo.put("lyricist", "아이유");
     musicList.add(musicInfo);
-    
-    String title = request.getParameter("title");
-    
-    if (title == null) {
 %>
-	<section id="content1">
-		<div class="info d-flex mb-3">
-			<img src="<%= artistInfo.get("photo") %>" width="150px" class="m-3">
-			<div class="mt-3">
-				<h3><%= artistInfo.get("name") %></h3>
-				<div><%= artistInfo.get("agency") %></div>
-				<div><%= artistInfo.get("debute") %></div>
-			</div>
+<section class="contents">
+	<!-- 아티스트 정보 영역 -->
+	<div class="singer-info d-flex mt-4 border border-success p-3">
+		<div class="singer-photo mr-4">
+			<img src="<%= artistInfo.get("photo") %>" width="150px" alt="가수 이미지">
 		</div>
-		
-		<h4>곡 목록</h4>
-		
-		<table class="table table-hover text-center">
+		<div class="singer-info">
+			<h3><%= artistInfo.get("name") %></h3>
+			<div><%= artistInfo.get("agency") %></div>
+			<div><%= artistInfo.get("debute") %></div>
+		</div>
+	</div>
+	
+	<!-- 곡 목록 영역 -->
+	<div class="music-list">
+		<h4 class="mt-3">곡 목록</h4>
+		<table class="table text-center">
 			<thead>
 				<tr>
 					<th>no</th>
@@ -105,19 +106,18 @@
 			</thead>
 			<tbody>
 			<%
-				for (Map<String, Object> music : musicList) {
+				for (Map<String, Object> info : musicList) {
 			%>
 				<tr>
-					<td><%= music.get("id") %></td>
-					<td><a href="template.jsp?title=<%= music.get("title") %>"><%= music.get("title") %></a></td>
-					<td><%= music.get("album") %></td>
+					<td><%= info.get("id") %></td>
+					<!-- 쿼리스트링을 넘길때는 title이 아닌 id값을 넘경야한다!! title은 중복값이 있을 확률이 높기때문. 대부분 id값을 보낸다. -->
+					<td><a href="info_template.jsp?id=<%= info.get("id") %>"><%= info.get("title") %></a></td>
+					<td><%= info.get("album") %></td>
 				</tr>
 			<%
 				}
 			%>
 			</tbody>
 		</table>
-<%
-	}
-%>
-	</section>
+	</div>
+</section>

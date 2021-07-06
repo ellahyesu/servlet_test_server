@@ -14,16 +14,12 @@
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body>
-	<div id="wrap" class="m-2">
-		<form method="get" action="/lesson03/quiz02/template.jsp">
-			<jsp:include page="header.jsp" />
-			<jsp:include page="menu.jsp" />
-			<section>
-				<jsp:include page="content1.jsp" />
-				<jsp:include page="content2.jsp" />
-			</section>
-			<jsp:include page="footer.jsp" />
-		</form>
+	<div id="wrap">
+		<jsp:include page="header.jsp" />
+		<jsp:include page="menu.jsp" />
+		<jsp:include page="list_content.jsp" />
+		<hr>
+		<jsp:include page="footer.jsp" />
 	</div>
 </body>
 </html>

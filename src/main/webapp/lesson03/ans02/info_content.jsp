@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>	
 <%@ page import="java.util.*" %>
 <%
 // 아티스트 정보 
-
     Map<String, Object> artistInfo = new HashMap<>();
     artistInfo.put("name", "아이유");
     artistInfo.put("debute", 2008);
     artistInfo.put("agency", "EDAM엔터테인먼트");
     artistInfo.put("photo", "https://pbs.twimg.com/profile_images/1374979417915547648/vKspl9Et_400x400.jpg");
+
 
 // 아이유 노래 리스트 
     List<Map<String, Object>> musicList = new ArrayList<>();
@@ -78,46 +78,54 @@
     musicInfo.put("composer", "아이유,이종훈,이채규");
     musicInfo.put("lyricist", "아이유");
     musicList.add(musicInfo);
-    
-    String title = request.getParameter("title");
-    
-    if (title == null) {
 %>
-	<section id="content1">
-		<div class="info d-flex mb-3">
-			<img src="<%= artistInfo.get("photo") %>" width="150px" class="m-3">
-			<div class="mt-3">
-				<h3><%= artistInfo.get("name") %></h3>
-				<div><%= artistInfo.get("agency") %></div>
-				<div><%= artistInfo.get("debute") %></div>
-			</div>
-		</div>
-		
-		<h4>곡 목록</h4>
-		
-		<table class="table table-hover text-center">
-			<thead>
-				<tr>
-					<th>no</th>
-					<th>제목</th>
-					<th>앨범</th>
-				</tr>
-			</thead>
-			<tbody>
-			<%
-				for (Map<String, Object> music : musicList) {
-			%>
-				<tr>
-					<td><%= music.get("id") %></td>
-					<td><a href="template.jsp?title=<%= music.get("title") %>"><%= music.get("title") %></a></td>
-					<td><%= music.get("album") %></td>
-				</tr>
-			<%
-				}
-			%>
-			</tbody>
-		</table>
+
 <%
+	// 상세 정보를 보여줄 target 세팅
+	Map<String, Object> target = null;
+
+	// 1. 목록에서 클릭한 경우(id값)
+	if (request.getParameter("id") != null) {
+		Integer paramId = Integer.valueOf(request.getParameter("id"));
+		// out.print(paramId);
+		for (Map<String, Object> music : musicList) {
+			Integer id = (Integer) music.get("id");
+			if (id == paramId) {
+				target = music;
+				break;
+			}
+		}
 	}
+	// out.print(target);
+	// 2. 상단에서 검색한 경우(search값)
+	if (request.getParameter("search") != null) {
+		String paramSearch = request.getParameter("search");
+		// out.print(paramSearch);
+		for (Map<String, Object> music : musicList) {
+			String title = (String) music.get("title");
+			if (title.equals(paramSearch)) {
+				target = music;
+				break;
+			}
+		}
+	}
+	
 %>
-	</section>
+
+<section class="contents">	
+	<h4 class="mt-4">곡 정보</h4>
+	<div class="singer-info d-flex mt-4 border border-success p-3">
+		<div class="singer-photo mr-4">
+			<img src="<%= artistInfo.get("photo") %>" width="150px" alt="가수 이미지">
+		</div>
+		<div class="singer-info">
+			<h3><%= artistInfo.get("name") %></h3>
+			<div><%= artistInfo.get("agency") %></div>
+			<div><%= artistInfo.get("debute") %></div>
+		</div>
+	</div>
+	
+	<h4 class="mt-4">가사</h4>
+	<hr>
+	<div>가사 정보 없음</div>
+</section>

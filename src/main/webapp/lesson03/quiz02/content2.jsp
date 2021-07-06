@@ -79,37 +79,60 @@
     musicInfo.put("composer", "아이유,이종훈,이채규");
     musicInfo.put("lyricist", "아이유");
     musicList.add(musicInfo);
-%>
 
-<div>곡 목록</div>
+	String title = request.getParameter("title");
+	
+	if (title != null) {
+	%>
+<section>
 
-<table class="table table-hover text-center">
-	<thead>
-		<tr>
-			<th>no</th>
-			<th>제목</th>
-			<th>앨범</th>
-		</tr>
-	</thead>
-	<tbody>
+	<h4>곡 정보</h4>
 	
 	<%
-		for (Map music : musicList) {
+	for (Map<String, Object> eachMap : musicList) {
+		//if (title != null && !eachMap.get("title").equals(title)) {
+			//continue;
+		//} 
+		if (title != null && eachMap.get("title").equals(title)) {
 			%>
-			<tr>
-				<td><%= music.get("id") %></td>
-				<td><a href="template.jsp?title=<%= music.get("title") %>"><%= music.get("title") %></a></td>
-				<td><%= music.get("album") %></td>
-			</tr>
+			
+		<div class="info d-flex mb-3">
+			<img src="<%= eachMap.get("thumbnail") %>" width="150px">
+			<div class="m-2">
+				<h2><%= eachMap.get("title") %></h2>
+				<div class="text-success"><%= eachMap.get("singer") %></div>
+				<div class="d-flex">
+					<div><div class="mr-5">앨범</div></div>
+					<div><%= eachMap.get("album") %></div>
+				</div>
+				<div class="d-flex">
+					<div><div class="mr-2">재생시간</div></div>
+					<div><%= eachMap.get("time") %></div>
+				</div>
+				<div class="d-flex">
+					<div><div class="mr-4">작곡가</div></div>
+					<div><%= eachMap.get("composer") %></div>
+				</div>
+				<div class="d-flex">
+					<div><div class="mr-4">작사가</div></div>
+					<div><%= eachMap.get("lyricist") %></div>
+				</div>
+			</div>
+			
+		</div>
+		
+		<h4>가사</h4><hr>
+		<div>가사 정보 없음</div>
 			<%
 		}
-	%>
 		
 		
+	}
+}
+%>
+</section>
 
-			
-		
-	</tbody>
-		
-</table>
+
+
+
 		

@@ -1,4 +1,29 @@
 @charset "UTF-8";
+
+a, a:hover {
+	text-decoration: none;
+}
+
 .info {
-	border: 1px solid green;
+	border: 2px solid rgb(35, 209, 0);
+}
+
+header {
+	height: 50px;
+}
+
+nav {
+	height: 50px;
+}
+
+#content1 {
+	height: 600px;
+}
+
+#content2 {
+	height: 600px;
+}
+
+footer {
+	height: 50px;
 }
