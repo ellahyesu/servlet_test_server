@@ -113,15 +113,31 @@
 %>
 
 <section class="contents">	
+<%
+	if (target != null) { // if문 시작
+		Integer time = (Integer) target.get("time");
+	
+%>
 	<h4 class="mt-4">곡 정보</h4>
-	<div class="singer-info d-flex mt-4 border border-success p-3">
-		<div class="singer-photo mr-4">
-			<img src="<%= artistInfo.get("photo") %>" width="150px" alt="가수 이미지">
+	<div class="d-flex  border border-success p-3">
+		<div class="music-info">
+			<img class="album-size"
+				src="https://upload.wikimedia.org/wikipedia/ko/6/65/%EC%95%84%EC%9D%B4%EC%9C%A0_-_Love_poem.jpg">
 		</div>
-		<div class="singer-info">
-			<h3><%= artistInfo.get("name") %></h3>
-			<div><%= artistInfo.get("agency") %></div>
-			<div><%= artistInfo.get("debute") %></div>
+		<div class="ml-4">
+			<div class="display-4"><%=target.get("title") %></div>
+			<div class="font-weight-bold text-success"><%=target.get("singer") %></div>
+			<div class="d-flex mt-3 music-info">
+				<div class="text-dark">
+					앨범 <br> 재생시간 <br> 작곡가 <br> 작사가
+				</div>
+				<div class="ml-4">
+					<%= target.get("album") %> <br>
+					<%= time / 60 %>:<%= time % 60 %> <br> 
+					<%= target.get("composer") %> <br> 
+					<%= target.get("lyricist") %>
+				</div>
+			</div>
 		</div>
 	</div>
 	
@@ -129,3 +145,9 @@
 	<hr>
 	<div>가사 정보 없음</div>
 </section>
+
+<%  } else {  //-- if문 종료, else문 시작 => target이 없는 경우 %>
+<section>
+	<h1>정보 없음</h1>
+</section>
+<%  } %>
