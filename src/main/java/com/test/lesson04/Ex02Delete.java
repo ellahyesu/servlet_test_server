@@ -23,7 +23,6 @@ public class Ex02Delete extends HttpServlet {
 		try {
 			mysqlService.update(query);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		mysqlService.disconnect();
