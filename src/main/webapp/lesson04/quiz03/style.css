@@ -12,6 +12,10 @@
 	width: 350px;
 }
 
+.h250 {
+	height: 250px;
+}
+
 #wrap {
 	margin: auto;
 	width: 1200px;
@@ -23,9 +27,6 @@ header {
 
 nav {
 	height: 50px;
-}
-
-.contents {
 }
 
 .box {
